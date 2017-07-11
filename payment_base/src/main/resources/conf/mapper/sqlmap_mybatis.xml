@@ -1,0 +1,110 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "GenericSql">
+
+	
+	<select id = "SelectObjectVOSql" parameterType="java.util.HashMap" resultType="java.util.HashMap" >
+	  SELECT 
+		<if test="sqlvalue != null">
+			${sqlvalue}
+		</if>
+		FROM
+		<if test="sqltablename != null">
+			${sqltablename}
+		</if>
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		  	<foreach item="item" index="index" collection="sqlwhere"  separator="AND" >
+			        ${item.key} = #{item.value}
+			</foreach>
+		</trim>
+		<if test="start != null">
+			<trim prefix="LIMIT" >
+				#{start}
+				<if test="end != null">
+					,#{end}
+				</if>
+			</trim>
+		</if>
+	</select>
+	
+	<select id="CountSelectObjectVOSql" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		select count(1)
+		from
+		<if test="sqltablename != null">${sqltablename}</if>
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		  	<foreach item="item" index="index" collection="sqlwhere"  separator="AND" >
+			        ${item.key} = #{item.value}
+			</foreach>
+		</trim>
+	</select>
+	
+	<insert id="InsertObjectVOSql" parameterType="java.util.HashMap">
+		 <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+		  	SELECT LAST_INSERT_ID() as id
+		 </selectKey>
+		insert into
+		<if test="sqltablename != null">${sqltablename}</if>
+		<if test="sqlvalue != null">${sqlvalue}</if> 
+		values
+		<if test="sqlwhere != null">
+		  	<foreach item="item" index="index" collection="sqlwhere" open="(" close=")"  separator="," >
+			    #{item.value}
+			</foreach>
+		</if>
+		
+	</insert>
+	
+	<update id="UpdateObjectVOSql" parameterType="java.util.HashMap"  >
+		update
+		<if test="sqltablename != null">${sqltablename}</if>
+		set
+		<if test="sqlvalue != null">
+			<foreach item="item" index="index" collection="sqlvalue"  separator="," >
+			    ${item.key} = #{item.value}
+			</foreach>
+		</if> 
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="sqlwhere != null">
+				<foreach item="item" index="index" collection="sqlwhere"  separator="AND" >
+				    ${item.key} = #{item.value}
+				</foreach>
+			</if>
+		</trim>
+	</update>
+	
+	<delete id="DeleteObjectVOSql" parameterType="java.util.HashMap">
+		delete from
+		<if test="sqltablename != null">${sqltablename}</if>
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="sqlwhere != null">
+				<foreach item="item" index="index" collection="sqlwhere"  separator="AND" >
+				    ${item.key} = #{item.value}
+				</foreach>
+			</if>
+		</trim>
+	</delete>
+	
+	<update id="UpdateObjectVOSqlBatch" parameterType="java.util.HashMap"  >
+		update
+		<if test="sqltablename != null">${sqltablename}</if>
+		set
+		<if test="sqlvalue != null">
+			<foreach item="item" index="index" collection="sqlvalue"  separator="," >
+			    ${item.key} = #{item.value}
+			</foreach>
+		</if> 
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="sqltablepkname != null">${sqltablepkname}</if>
+			<if test="sqlwhere != null">
+				<foreach item="item" index="index" collection="sqlwhere" open=" in (" close=")" separator="," >
+				    ${item}
+				</foreach>
+			</if>
+		</trim>
+	</update>
+	
+	
+
+</mapper>
