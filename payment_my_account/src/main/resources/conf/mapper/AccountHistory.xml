@@ -1,0 +1,35 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "AccountHistory">
+
+	<sql id="table"> TBL_ACCOUNT_ACCOUNTHISTORY </sql>
+	
+	<!-- 日汇总账户待结算金额  -->
+	<select id="listDailyCollectAccountHistoryVo" parameterType="java.util.Map" resultType="DailyCollectAccountHistoryVo">
+		select
+			ACCOUNTNO as "accountNo",
+			sum(case when FUNDDIRECTION = 123 then AMOUNT else -AMOUNT end) as "totalAmount",
+			count(1) as "totalNum",
+			CONCAT(#{statDate},'') as "collectDate",
+			max(id) as "lastId",
+			RISK_DAY as "riskDay"
+		from <include refid="table" />
+		where
+			ACCOUNTNO = #{accountNo}
+			and ISCOMPLETESETT = 101
+			and ISALLOWSETT = 100
+			<if test="fundDirection != null and fundDirection !=''"> and FUNDDIRECTION = #{fundDirection} </if>
+			and (
+			<![CDATA[date(CREATETIME) <= FUN_DATE_ADD(#{statDate}, -RISKDAY)]]>
+			and RISKDAY is not null
+			or
+			<![CDATA[date(CREATETIME) <= FUN_DATE_ADD(#{statDate}, -#{riskDay})]]>
+			and RISKDAY is null
+			)
+		group by ACCOUNTNO, RISKDAY
+	</select>
+	
+
+</mapper>

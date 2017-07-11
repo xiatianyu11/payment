@@ -1,8 +1,9 @@
 package com.my.payment.account.dao;
 
 import com.my.payment.account.entity.AccountDto;
+import com.my.payment.base.dao.BaseDao;
 
-public interface AccountDao {
+public interface AccountDao extends BaseDao<AccountDto>{
 	
 	public String buildAccountNo(String accountType);
 	

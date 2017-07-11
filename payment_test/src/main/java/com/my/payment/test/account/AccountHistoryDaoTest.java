@@ -1,4 +1,4 @@
-package com.my.payment.test;
+package com.my.payment.test.account;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,19 +8,20 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.my.payment.account.dao.AccountDao;
+import com.my.payment.account.dao.AccountHistoryDao;
+import com.my.payment.account.entity.AccountHistoryDto;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:conf/spring*.xml")
-public class AccountDaoTest {
+public class AccountHistoryDaoTest {
 	
 	@Autowired
-	private AccountDao accountDao;
+	private AccountHistoryDao accountHistoryDao;
 	
 	@Test
-	public void testBuildAccountNo(){
-		String accountNo = accountDao.buildAccountNo("TESt");
-		System.out.println(accountNo);
-		Assert.assertNotNull(accountNo);
+	public void testGetByAccountNo_requestNo_trxType(){
+		AccountHistoryDto dto = accountHistoryDao.getByAccountNo_requestNo_trxType("80080011000005120101", "10042014101110003011", 1001);
+		Assert.assertNotNull(dto);
 	}
 
 }

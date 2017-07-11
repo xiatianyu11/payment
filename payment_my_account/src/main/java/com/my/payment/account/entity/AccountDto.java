@@ -2,8 +2,10 @@ package com.my.payment.account.entity;
 
 import java.util.Date;
 
+import com.my.payment.base.annotations.EntityPK;
 import com.my.payment.base.dto.impl.BaseDtoImpl;
 
+@EntityPK(Pk = "id", tableName = "TBL_ACCOUNT")
 public class AccountDto extends BaseDtoImpl{
 	
 	/**
