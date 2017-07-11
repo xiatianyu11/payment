@@ -9,6 +9,8 @@ import com.my.payment.base.dto.BaseDto;
 public abstract class BaseDtoImpl implements BaseDto {
 
     private static final long serialVersionUID = 3176448148012423247L;
+    
+    /*
 
     private Long              createUser;
 
@@ -59,5 +61,7 @@ public abstract class BaseDtoImpl implements BaseDto {
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
+    
+    */
 
 }

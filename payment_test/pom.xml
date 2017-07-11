@@ -18,6 +18,12 @@
 		</dependency>
 		
 		<dependency>
+		    <groupId>com.my.payment</groupId>
+		    <artifactId>payment_my_account</artifactId>
+		    <version>${payment.base.version}</version>
+		</dependency>
+		
+		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-test</artifactId>
 		    <version>${org.springframework.version}</version>
