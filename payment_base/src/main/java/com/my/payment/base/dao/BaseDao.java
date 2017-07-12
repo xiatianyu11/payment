@@ -54,6 +54,17 @@ public interface BaseDao<T extends BaseDto> {
      */
     T save(T object);
     
+    /**
+     * 
+     * <pre>
+     * Generic method to save an object
+     * </pre>
+     *
+     * @param object
+     * @return the persisted object
+     */
+    void saveBatch(List<T> list);
+    
     
    /**
      * 

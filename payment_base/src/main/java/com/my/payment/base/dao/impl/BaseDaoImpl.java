@@ -111,6 +111,13 @@ public abstract class BaseDaoImpl<T extends BaseDto> extends SqlSessionDaoSuppor
 
         return save(object, tableName);
     }
+    
+    public void saveBatch(final List<T> list) {
+
+        for(T t : list){
+        	this.save(t);
+        }
+    }
 
     private T save(final T object, String tableName) {
 
