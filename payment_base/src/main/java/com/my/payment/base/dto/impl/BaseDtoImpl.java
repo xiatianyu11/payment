@@ -1,67 +1,42 @@
 package com.my.payment.base.dto.impl;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import com.my.payment.base.dto.BaseDto;
 
 
 
 public abstract class BaseDtoImpl implements BaseDto {
+    private static final long serialVersionUID = 1L;
+	private Long id;
+	private Integer version = 0;
+	/**
+	 * 创建时间
+	 */
+	protected Date createTime = new Date();
 
-    private static final long serialVersionUID = 3176448148012423247L;
-    
-    /*
-
-    private Long              createUser;
-
-    private Timestamp         createTime;
-
-    private Long              updateUser;
-
-    private Timestamp         updateTime;
-    
-    private Long 			  isRemove;
-
-    public Long getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(Long createUser) {
-        this.createUser = createUser;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(Long updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    public Long getIsRemove() {
-		return isRemove;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIsRemove(Long isRemove) {
-		this.isRemove = isRemove;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public Timestamp getUpdateTime() {
-        return updateTime;
-    }
+	public Integer getVersion() {
+		return version;
+	}
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
-    
-    */
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
 }
