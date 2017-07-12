@@ -7,29 +7,91 @@
 	<sql id="table"> TBL_ACCOUNT_ACCOUNTHISTORY </sql>
 	
 	<!-- 日汇总账户待结算金额  -->
-	<select id="listDailyCollectAccountHistoryVo" parameterType="java.util.Map" resultType="DailyCollectAccountHistoryVo">
+	<select id="listDailyCollectAccountHistoryVo" parameterType="java.util.Map" resultType="com.my.payment.account.entity.DailyCollectAccountHistoryVo">
 		select
 			ACCOUNTNO as "accountNo",
 			sum(case when FUNDDIRECTION = 123 then AMOUNT else -AMOUNT end) as "totalAmount",
 			count(1) as "totalNum",
 			CONCAT(#{statDate},'') as "collectDate",
 			max(id) as "lastId",
-			RISK_DAY as "riskDay"
+			RISKDAY as "riskDay"
 		from <include refid="table" />
 		where
 			ACCOUNTNO = #{accountNo}
 			and ISCOMPLETESETT = 101
 			and ISALLOWSETT = 100
 			<if test="fundDirection != null and fundDirection !=''"> and FUNDDIRECTION = #{fundDirection} </if>
+			and ( (
+			<![CDATA[date(CREATETIME) <= FUN_DATE_ADD(#{statDate}, -RISKDAY)]]>
+			and RISKDAY is not null )
+			or (
+			<![CDATA[date(CREATETIME) <= FUN_DATE_ADD(#{statDate}, -#{riskDay})]]>
+			and RISKDAY is null
+			))
+		group by ACCOUNTNO, RISKDAY
+	</select>
+	
+	
+	<!-- 日汇总账户待结算金额_针对单笔交易T+0  -->
+	<select id="listDailyCollectAccountHistoryVo_t0" parameterType="java.util.Map" resultType="com.my.payment.account.entity.DailyCollectAccountHistoryVo">
+		select
+			ACCOUNTNO as "accountNo",
+			sum(case when FUNDDIRECTION = 123 then AMOUNT else -AMOUNT end) as "totalAmount",
+			count(1) as "totalNum",
+			date(CREATETIME) as "collectDate",
+			max(id) as "lastId",
+			RISKDAY as "riskDay"
+		from <include refid="table" />
+		where
+			REQUESTNO = #{requestNo}
+			and ACCOUNTNO = #{accountNo}
+			and ISCOMPLETESETT = 101
+			and ISALLOWSETT = 100
+			and TRXTYPE = 6006
+			<if test="fundDirection != null and fundDirection !=''"> and FUNDDIRECTION = #{fundDirection} </if>
+		group by ACCOUNTNO, RISKDAY, CREATETIME
+	</select>
+	
+	<!-- 更新账户风险预存期外的账户历史记录记为结算完成 -->
+	<update id="updateCompleteSettTo100" parameterType="java.util.Map">
+		update <include refid="table" />
+			set ISCOMPLETESETT = 100, VERSION = VERSION + 1
+		where
+			ACCOUNTNO = #{accountNo}
+			and ISCOMPLETESETT = 101
+			and ISALLOWSETT = 100
 			and (
 			<![CDATA[date(CREATETIME) <= FUN_DATE_ADD(#{statDate}, -RISKDAY)]]>
 			and RISKDAY is not null
 			or
-			<![CDATA[date(CREATETIME) <= FUN_DATE_ADD(#{statDate}, -#{riskDay})]]>
+			<![CDATA[ date(CREATETIME) <= FUN_DATE_ADD(#{statDate}, -#{riskDay})]]>
 			and RISKDAY is null
 			)
-		group by ACCOUNTNO, RISKDAY
-	</select>
+	</update>
+	
+	<!-- 更新账户历史记录记为结算完成_针对单笔交易T+0 -->
+	<update id="updateCompleteSettTo100_t0" parameterType="java.util.Map">
+		update <include refid="table" />
+			set ISCOMPLETESETT = 100, VERSION = VERSION + 1
+		where
+			REQUESTNO = #{requestNo}
+			and ACCOUNTNO = #{accountNo}
+			and ISCOMPLETESETT = 101
+			and ISALLOWSETT = 100
+			and TRXTYPE = 6006
+	</update>
+	
+	<!-- 更新账户历史记录记为结算完成 -->
+	<update id="updateCompleteSettTo100LastId" parameterType="java.util.Map">
+		update <include refid="table" />
+			set ISCOMPLETESETT=100, VERSION = VERSION + 1
+		where
+			ACCOUNTNO = #{accountNo}
+			and ISCOMPLETESETT = 101
+			and ISALLOWSETT = 100
+			and FUNDDIRECTION = 321
+			<![CDATA[ and ID <= #{lastId} ]]>
+	</update>
 	
 
 </mapper>

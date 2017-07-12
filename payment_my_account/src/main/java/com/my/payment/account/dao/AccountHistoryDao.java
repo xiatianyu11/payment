@@ -20,6 +20,14 @@ public interface AccountHistoryDao extends BaseDao<AccountHistoryDto>{
 	
 	
 	public List<DailyCollectAccountHistoryVo> listDailyCollectAccountHistoryVo(String accountNo, String statDate, Integer riskDay, Integer fundDirection) ;
+	
+	public List<DailyCollectAccountHistoryVo> listDailyCollectAccountHistoryVo_t0(String accountNo, String requestNo);
+	
+	public void updateCompleteSettTo100(String accountNo, String statDate, Integer riskDay);
+	
+	public void updateCompleteSettTo100_t0(String accountNo, String requestNo);
+	
+	public void updateCompleteSettTo100LastId(String accountNo, Long lastId);
 
 
 }
