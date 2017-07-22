@@ -1,0 +1,14 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "User">
+
+	
+	<select id = "listRolesOfUser" parameterType="java.lang.Long" resultType="com.my.payment.account.entity.RoleDto" >
+	  SELECT * FROM t_role_user ru INNER JOIN t_role r on ru.roleId = r.id WHERE ru.userId = #{userId}
+	</select>
+	
+	
+
+</mapper>

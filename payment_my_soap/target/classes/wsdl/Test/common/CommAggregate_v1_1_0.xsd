@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 被2012 () 使用XMLSpy v编辑的 (http://www.altova.com) by -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.dbs.com/my/common/1_1" targetNamespace="http://schemas.dbs.com/my/common/1_1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1.0">
+	<xs:element name="MyId">
+		<xs:annotation>
+			<xs:documentation>test </xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="30"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="RequestoerMyId">
+		<xs:annotation>
+			<xs:documentation>Requestoer 1bankID</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="30"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MyUserId">
+		<xs:annotation>
+			<xs:documentation>Temp Uid</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="30"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DetailInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="StatusCode" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Response Status Code</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="StatusDesc" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Response Status Description</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MsgUID">
+		<xs:annotation>
+			<xs:documentation>Message Identifier</xs:documentation>
+			<xs:documentation>This uniquely identifies the message from the Requesting Client.
+Unique Universal Identifier (UUID) recommended. 
+This element has the same value in both the request and response message.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="36"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MsgVersion">
+		<xs:annotation>
+			<xs:documentation>Message Version</xs:documentation>
+			<xs:documentation>The version of message set specifications used. 
+All messages in the same document must refer to the same message specification version.E.g. <MsgVersion>1.1		</MsgVersion>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="20"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SvcVersion">
+		<xs:annotation>
+			<xs:documentation>Service Version</xs:documentation>
+			<xs:documentation>The version of the service being requested. 
+All messages in the same document must refer to the same service version.  
+E.g. <SvcVersion>1.1</SvcVersion>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="20"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MsgDetl">
+		<xs:annotation>
+			<xs:documentation>Message Set Details Header</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgVersion" minOccurs="0"/>
+				<xs:element ref="MsgUID"/>
+				<xs:element ref="SvcVersion" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="mustUnderstand" type="xs:boolean" default="false"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

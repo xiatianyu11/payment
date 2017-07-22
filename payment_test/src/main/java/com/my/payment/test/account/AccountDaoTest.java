@@ -18,6 +18,8 @@ public class AccountDaoTest {
 	
 	@Test
 	public void testBuildAccountNo(){
+		
+		//System.out.println(System.getProperty("test.conf"));
 		String accountNo = accountDao.buildAccountNo("TESt");
 		System.out.println(accountNo);
 		Assert.assertNotNull(accountNo);

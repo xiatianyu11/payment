@@ -88,3 +88,60 @@ CREATE TABLE `TBL_ACCOUNT_FROZEN_RECORD` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='账户冻结记录';
 
 INSERT INTO `TBL_ACCOUNT_FROZEN_RECORD` VALUES (1,0,'2014-10-13 15:41:28','80080011000005340101',2,6,'2014-10-13 15:41:28','');
+
+
+CREATE TABLE IF NOT EXISTS `t_user` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `username` varchar(32) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `nickname` varchar(32) NOT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+INSERT INTO `t_user` (`id`, `username`, `password`, `nickname`, `status`) VALUES(5, 'sr', '18b3f0300680fac1784e819d43f1309f', 'srg', 1);
+
+
+CREATE TABLE IF NOT EXISTS `t_role` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(32) NOT NULL,
+  `sn` varchar(32) NOT NULL,
+   PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+INSERT INTO `t_role` (`id`, `name`, `sn`) VALUES
+(1, 'test2', 'test2');
+
+CREATE TABLE IF NOT EXISTS `t_role_user` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `roleId` bigint(20) NOT NULL,
+  `userId` bigint(20) NOT NULL,
+   PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+
+CREATE TABLE IF NOT EXISTS `t_acl` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `resourceType` varchar(64) NOT NULL,
+  `roleId` bigint(20) NOT NULL,
+  `resourceId` bigint(20) NOT NULL,
+  `aclstate` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+INSERT INTO `t_acl` (`id`, `resourceType`, `roleId`, `resourceId`, `aclstate`) VALUES
+(2,  'controller', 1, 1, 17);
+
+CREATE TABLE IF NOT EXISTS `t_ctrl_res` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(32) NOT NULL,
+  `parent_sn` varchar(32) NOT NULL,
+  `class_name` varchar(128) NOT NULL,
+  `order_num` int(11) NOT NULL,
+  `sn` varchar(32) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+INSERT INTO `t_ctrl_res` (`id`, `name`, `parent_sn`, `class_name`, `order_num`, `sn`) VALUES
+(1, 'Role Management', 'auth_root', 'org.konghao.shiro.controller.RoleController', 2, 'auth_role');
+

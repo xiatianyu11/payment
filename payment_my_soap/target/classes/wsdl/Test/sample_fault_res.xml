@@ -1,0 +1,23 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Header>
+      <com:MsgDetl mustUnderstand="false" xmlns:com="http://schemas.dbs.com/my/common/1_1">
+         <!--Optional:-->
+         <com:MsgVersion>?</com:MsgVersion>
+         <com:MsgUID>?</com:MsgUID>
+         <!--Optional:-->
+         <com:SvcVersion>?</com:SvcVersion>
+      </com:MsgDetl>
+   </soap:Header>
+   <soap:Body>
+      <soap:Fault>
+         <faultcode>soap:Server</faultcode>
+         <faultstring>This operation is fail</faultstring>
+         <detail>
+            <DetailInfo xmlns:ns2="http://schemas.dbs.com/my/Test/1_1" xmlns="http://schemas.dbs.com/my/common/1_1">
+               <StatusCode>001</StatusCode>
+               <StatusDesc>fail l</StatusDesc>
+            </DetailInfo>
+         </detail>
+      </soap:Fault>
+   </soap:Body>
+</soap:Envelope>

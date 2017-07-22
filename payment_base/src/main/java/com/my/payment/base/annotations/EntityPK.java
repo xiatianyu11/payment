@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface EntityPK {
     
-    String Pk();
+    String Pk() default "id";
     
     boolean defaultColumn() default true;
     

@@ -1,0 +1,18 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Header>
+      <com:MsgDetl mustUnderstand="false" xmlns:com="http://schemas.dbs.com/my/common/1_1">
+         <!--Optional:-->
+         <com:MsgVersion>?</com:MsgVersion>
+         <com:MsgUID>?</com:MsgUID>
+         <!--Optional:-->
+         <com:SvcVersion>?</com:SvcVersion>
+      </com:MsgDetl>
+   </soap:Header>
+   <soap:Body>
+      <ns2:TestResponse xmlns="http://schemas.dbs.com/my/common/1_1" xmlns:ns2="http://schemas.dbs.com/my/Test/1_1">
+         <MyId>122222</MyId>
+         <RequestoerMyId>323423</RequestoerMyId>
+         <MyUserId>1234556</MyUserId>
+      </ns2:TestResponse>
+   </soap:Body>
+</soap:Envelope>
